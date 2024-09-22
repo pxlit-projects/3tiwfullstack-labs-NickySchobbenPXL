@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "organizations")
@@ -23,6 +27,9 @@ public class Organization {
 
     private String address;
 
-    // private List<Employee> employees;
-    // private List<Department> departments;
+    @ElementCollection()
+    private List<Employee> employees = new ArrayList<>();
+
+    @ElementCollection()
+    private List<Department> departments = new ArrayList<>();
 }

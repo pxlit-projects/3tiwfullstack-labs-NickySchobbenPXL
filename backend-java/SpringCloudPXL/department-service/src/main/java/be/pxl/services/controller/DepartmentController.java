@@ -34,7 +34,6 @@ public class DepartmentController {
     @PostMapping
     public ResponseEntity<Long> addDepartment(@RequestBody DepartmentRequest departmentRequest) {
         Long id = departmentService.addDepartment(departmentRequest);
-        LOGGER.info("Department created with ID: {}", id);
         return ResponseEntity.created(URI.create("/department/" + id)).build();
     }
 

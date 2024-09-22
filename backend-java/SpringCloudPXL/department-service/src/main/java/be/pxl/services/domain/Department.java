@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,10 @@ public class Department {
 
     private Long organizationId;
     private String name;
+
+    @ElementCollection
+    private List<Employee> employees = new ArrayList<>();
+
 
     private String position;
 }

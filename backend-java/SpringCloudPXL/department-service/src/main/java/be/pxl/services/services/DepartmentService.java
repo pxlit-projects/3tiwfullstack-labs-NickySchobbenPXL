@@ -6,6 +6,8 @@ import be.pxl.services.domain.dto.DepartmentResponse;
 import be.pxl.services.exceptions.DepartmentNotFoundException;
 import be.pxl.services.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class DepartmentService implements IDepartmentService {
 
     private final DepartmentRepository departmentRepository;
+
+    private static final Logger LOGGER = LogManager.getLogger(DepartmentService.class);
     @Override
     public List<DepartmentResponse> getAllDepartments() {
         return departmentRepository.findAll().stream().map(this::mapDepartmentToDto).toList();
@@ -25,7 +29,7 @@ public class DepartmentService implements IDepartmentService {
         return DepartmentResponse.builder()
                 .organizationId(department.getOrganizationId())
                 .name(department.getName())
-                // .employees(department.getEmployees())
+                .employees(department.getEmployees())
                 .position(department.getPosition())
                 .build();
     }
@@ -35,9 +39,12 @@ public class DepartmentService implements IDepartmentService {
         Department newDepartment = Department.builder()
                 .organizationId(departmentRequest.getOrganizationId())
                 .name(departmentRequest.getName())
-                // .employees(departmentRequest.getEmployees())
+                .employees(departmentRequest.getEmployees())
                 .position(departmentRequest.getPosition())
                 .build();
+
+        LOGGER.info(newDepartment.getEmployees());
+        LOGGER.info(newDepartment.getName());
 
         return departmentRepository.save(newDepartment).getId();
     }
@@ -62,8 +69,7 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public List<DepartmentResponse> findByOrganizationWithEmployees(Long organizationId) {
-        // List<Department> listOfDepartments = departmentRepository.findByOrganizationId(organizationId);
-        // return listOfDepartments.stream().filter(department -> !department.getEmployees().isEmpty()).map(this::mapDepartmentToDto).toList();
-        return null;
+        List<Department> listOfDepartments = departmentRepository.findByOrganizationId(organizationId);
+        return listOfDepartments.stream().filter(department -> !department.getEmployees().isEmpty()).map(this::mapDepartmentToDto).toList();
     }
 }

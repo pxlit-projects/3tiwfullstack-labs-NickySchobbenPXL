@@ -1,22 +1,19 @@
-package be.pxl.services.domain.dto;
+package be.pxl.services.domain;
 
-
-import be.pxl.services.domain.Employee;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentResponse {
-
+@Embeddable
+public class Employee {
     private Long organizationId;
     private String name;
-    private List<Employee> employees;
+    private int age;
     private String position;
 }
