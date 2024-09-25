@@ -72,4 +72,22 @@ public class EmployeeService implements IEmployeeService {
         List<Employee> listOfEmployees = employeeRepository.findByOrganizationId(organizationId);
         return listOfEmployees.stream().map(this::mapEmployeeToDto).toList();
     }
+
+    @Override
+    public void UpdateEmployee(Long id, EmployeeRequest employeeRequest) {
+        Employee employeeToUpdate = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with id " + id + " not found"));
+        employeeToUpdate.setName(employeeRequest.getName());
+        employeeToUpdate.setAge(employeeToUpdate.getAge());
+        employeeToUpdate.setPosition(employeeToUpdate.getPosition());
+        employeeToUpdate.setDepartmentId(employeeToUpdate.getDepartmentId());
+        employeeToUpdate.setOrganizationId(employeeToUpdate.getOrganizationId());
+
+        employeeRepository.save(employeeToUpdate);
+    }
+
+    @Override
+    public void deleteEmployeeById(Long id) {
+        Employee employeeToDelete = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with id " + id + " not found"));
+        employeeRepository.delete(employeeToDelete);
+    }
 }

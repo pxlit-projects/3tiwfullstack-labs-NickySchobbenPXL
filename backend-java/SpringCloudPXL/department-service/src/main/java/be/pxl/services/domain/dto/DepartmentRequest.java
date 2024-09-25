@@ -1,6 +1,5 @@
 package be.pxl.services.domain.dto;
 
-import be.pxl.services.domain.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

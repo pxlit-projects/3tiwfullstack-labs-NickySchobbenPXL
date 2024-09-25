@@ -10,6 +10,7 @@ import org.hibernate.annotations.Fetch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "organizations")
@@ -27,9 +28,9 @@ public class Organization {
 
     private String address;
 
-    @ElementCollection()
-    private List<Employee> employees = new ArrayList<>();
+    @Transient
+    private List<?> employees = new ArrayList<>();
 
-    @ElementCollection()
-    private List<Department> departments = new ArrayList<>();
+    @Transient
+    private List<?> departments = new ArrayList<>();
 }

@@ -15,4 +15,8 @@ public interface IDepartmentService {
     List<DepartmentResponse> findDepartmentsByOrganizationId(Long organizationId);
 
     List<DepartmentResponse> findByOrganizationWithEmployees(Long organizationId);
+
+    void updateDepartmentById(Long departmentId, DepartmentRequest departmentRequest);
+
+    void deleteDepartmentById(Long departmentId);
 }

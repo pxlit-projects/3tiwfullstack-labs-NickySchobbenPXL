@@ -24,8 +24,8 @@ public class Department {
     private Long organizationId;
     private String name;
 
-    @ElementCollection
-    private List<Employee> employees = new ArrayList<>();
+    @Transient
+    private List<?> employees = new ArrayList<>();
 
 
     private String position;

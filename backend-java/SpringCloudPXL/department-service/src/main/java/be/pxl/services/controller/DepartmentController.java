@@ -6,6 +6,7 @@ import be.pxl.services.services.IDepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,18 @@ public class DepartmentController {
     @GetMapping("/organization/{organizationId}/with-employees")
     public ResponseEntity<List<DepartmentResponse>> findOrganizationWithEmployees(@PathVariable Long organizationId) {
         return ResponseEntity.ok(departmentService.findByOrganizationWithEmployees(organizationId));
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateDepartmentById(@PathVariable Long id, DepartmentRequest departmentRequest) {
+        departmentService.updateDepartmentById(id, departmentRequest);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDepartmentById(@PathVariable Long id)  {
+        departmentService.deleteDepartmentById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

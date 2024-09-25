@@ -7,6 +7,7 @@ import be.pxl.services.domain.dto.EmployeeRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.services.IEmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +48,17 @@ public class EmployeeController {
     @GetMapping("/department/{departmentId}")
     public ResponseEntity<List<EmployeeResponse>> findByDepartmentId(@PathVariable Long departmentId) {
         return ResponseEntity.ok(employeeService.findEmployeesByDepartment(departmentId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEmployeeById(@PathVariable Long id, @RequestBody EmployeeRequest employeeRequest) {
+        employeeService.UpdateEmployee(id, employeeRequest);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEmployeeById(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+        return ResponseEntity.noContent().build();
     }
  }
