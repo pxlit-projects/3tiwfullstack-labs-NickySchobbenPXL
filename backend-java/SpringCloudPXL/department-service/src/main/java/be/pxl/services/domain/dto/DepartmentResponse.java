@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,6 +14,6 @@ public class DepartmentResponse {
 
     private Long organizationId;
     private String name;
-    private List<Employee> employees;
+    // private List<Employee> employees;
     private String position;
 }
