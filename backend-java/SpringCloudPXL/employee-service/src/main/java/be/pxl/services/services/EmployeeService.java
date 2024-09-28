@@ -77,10 +77,10 @@ public class EmployeeService implements IEmployeeService {
     public void UpdateEmployee(Long id, EmployeeRequest employeeRequest) {
         Employee employeeToUpdate = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with id " + id + " not found"));
         employeeToUpdate.setName(employeeRequest.getName());
-        employeeToUpdate.setAge(employeeToUpdate.getAge());
-        employeeToUpdate.setPosition(employeeToUpdate.getPosition());
-        employeeToUpdate.setDepartmentId(employeeToUpdate.getDepartmentId());
-        employeeToUpdate.setOrganizationId(employeeToUpdate.getOrganizationId());
+        employeeToUpdate.setAge(employeeRequest.getAge());
+        employeeToUpdate.setPosition(employeeRequest.getPosition());
+        employeeToUpdate.setDepartmentId(employeeRequest.getDepartmentId());
+        employeeToUpdate.setOrganizationId(employeeRequest.getOrganizationId());
 
         employeeRepository.save(employeeToUpdate);
     }

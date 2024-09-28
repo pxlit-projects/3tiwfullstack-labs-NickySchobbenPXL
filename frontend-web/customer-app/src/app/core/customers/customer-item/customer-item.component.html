@@ -1,1 +1,12 @@
-<p>customer-item works!</p>
+<div [ngClass]="{'border border-2 border-yellow-500': customer.isLoyal}" class="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-md">
+  <img class="w-full h-36 object-cover" [src]="customer.avatar" alt="Card image">
+  <div class="p-6">
+    <h2 class="font-bold text-xl mb-2">{{customer.name}}</h2>
+    <p class="text-gray-700 text-base">
+      {{customer.city + "(" + customer.country + ")"}}
+    </p>
+    <button (click)="getDetails()" class="bg-green-500 hover:bg-green-700 text-white float-right font-bold mt-4 mb-4 py-2 px-2 rounded">
+      Details
+    </button>
+  </div>
+</div>

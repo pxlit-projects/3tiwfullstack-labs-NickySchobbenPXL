@@ -29,8 +29,8 @@ public class Organization {
     private String address;
 
     @Transient
-    private List<?> employees = new ArrayList<>();
+    private List<Employee> employees = new ArrayList<>();
 
     @Transient
-    private List<?> departments = new ArrayList<>();
+    private List<Department> departments = new ArrayList<>();
 }

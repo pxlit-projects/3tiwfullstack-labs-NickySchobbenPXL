@@ -32,9 +32,9 @@ public class NotificationService {
 
     public Long addNotification(NotificationRequest notificationRequest) {
         Notification notification = Notification.builder()
-                .to(notificationRequest.getTo())
+                .receiver(notificationRequest.getTo())
                 .subject(notificationRequest.getSubject())
-                .from(notificationRequest.getFrom())
+                .sender(notificationRequest.getFrom())
                 .message(notificationRequest.getMessage())
                 .build();
 
@@ -43,8 +43,8 @@ public class NotificationService {
 
     private NotificationResponse mapNotificationToDto(Notification notification) {
         return NotificationResponse.builder()
-                .to(notification.getTo())
-                .from(notification.getFrom())
+                .to(notification.getReceiver())
+                .from(notification.getSender())
                 .message(notification.getMessage())
                 .subject(notification.getSubject())
                 .build();

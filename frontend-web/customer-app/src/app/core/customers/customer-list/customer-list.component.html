@@ -1,1 +1,7 @@
-<p>customer-list works!</p>
+<app-filter></app-filter>
+<div class="md:container md:mx-auto container mx-auto mt-10">
+  <div class="grid grid-cols-3 gap-6">
+    @for(item of customers; track item.name)
+    {<app-customer-item [customer]="item"></app-customer-item>}
+  </div>
+</div>
