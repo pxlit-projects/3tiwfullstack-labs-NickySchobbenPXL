@@ -1,4 +1,4 @@
-package be.pxl.services.service;
+package be.pxl.services.services;
 
 import be.pxl.services.domain.Organization;
 import be.pxl.services.domain.dto.OrganizationRequest;
@@ -48,6 +48,22 @@ public class OrganizationService implements IOrganizationService {
         Organization organization = organizationRepository.findById(id).filter(org -> !org.getEmployees().isEmpty())
                 .orElseThrow(() -> new OrganizationNotFoundException("Organization with id " + id + " does not exist"));
         return mapOrganizationToDto(organization);
+    }
+
+    @Override
+    public void deleteOrganizationById(Long id) {
+        organizationRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateOrganizationById(Long id, OrganizationRequest organizationRequest) {
+        Organization organization = organizationRepository.findById(id).orElseThrow(() -> new OrganizationNotFoundException("Organization with id" + id + " cannot be found"));
+        organization.setName(organizationRequest.getName());
+        organization.setEmployees(organizationRequest.getEmployees());
+        organization.setAddress(organizationRequest.getAddress());
+        organization.setDepartments(organizationRequest.getDepartments());
+
+        organizationRepository.save(organization);
     }
 
     private OrganizationResponse mapOrganizationToDto(Organization organization) {

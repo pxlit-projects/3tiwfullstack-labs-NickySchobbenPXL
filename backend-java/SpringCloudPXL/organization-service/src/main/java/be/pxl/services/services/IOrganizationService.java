@@ -1,9 +1,7 @@
-package be.pxl.services.service;
+package be.pxl.services.services;
 
 import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.domain.dto.OrganizationResponse;
-
-import java.util.Optional;
 
 public interface IOrganizationService {
 
@@ -16,4 +14,8 @@ public interface IOrganizationService {
     public Long addOrganization(OrganizationRequest organizationRequest);
 
     public OrganizationResponse findOrganizationByIdWithEmployees(Long id);
+
+    public void deleteOrganizationById(Long id);
+
+    public void updateOrganizationById(Long id, OrganizationRequest organizationRequest);
 }

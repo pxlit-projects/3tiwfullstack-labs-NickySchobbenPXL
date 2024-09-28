@@ -2,8 +2,9 @@ package be.pxl.services.controller;
 
 import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.domain.dto.OrganizationResponse;
-import be.pxl.services.service.OrganizationService;
+import be.pxl.services.services.OrganizationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +42,17 @@ public class OrganizationController {
     @GetMapping("/{id}/with-employees")
     public ResponseEntity<OrganizationResponse> findByIdWithEmployees(@PathVariable Long id) {
         return ResponseEntity.ok(organizationService.findOrganizationByIdWithEmployees(id));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteOrganizationById(@PathVariable Long id) {
+        organizationService.deleteOrganizationById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateOrganizationById(@PathVariable Long id, @RequestBody OrganizationRequest organizationRequest) {
+        organizationService.updateOrganizationById(id, organizationRequest);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
