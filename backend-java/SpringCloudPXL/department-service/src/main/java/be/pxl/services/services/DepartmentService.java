@@ -1,6 +1,8 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.EmployeeClient;
 import be.pxl.services.domain.Department;
+import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.dto.DepartmentRequest;
 import be.pxl.services.domain.dto.DepartmentResponse;
 import be.pxl.services.exceptions.DepartmentNotFoundException;
@@ -17,16 +19,23 @@ public class DepartmentService implements IDepartmentService {
 
     private final DepartmentRepository departmentRepository;
 
+    private final EmployeeClient employeeClient;
+
     @Override
     public List<DepartmentResponse> getAllDepartments() {
-        return departmentRepository.findAll().stream().map(this::mapDepartmentToDto).toList();
+        List<Department> departments = departmentRepository.findAll().stream().toList();
+        for (Department department : departments) {
+            List<Employee> listOfEmployees = employeeClient.getEmployeesByDepartmentId(department.getId());
+            department.setEmployees(listOfEmployees);
+        }
+        return departments.stream().map(this::mapDepartmentToDto).toList();
     }
 
     private DepartmentResponse mapDepartmentToDto(Department department) {
         return DepartmentResponse.builder()
                 .organizationId(department.getOrganizationId())
                 .name(department.getName())
-                // .employees(department.getEmployees())
+                .employees(department.getEmployees())
                 .position(department.getPosition())
                 .build();
     }
@@ -50,6 +59,7 @@ public class DepartmentService implements IDepartmentService {
 
         if (optionalDepartment.isPresent()) {
             Department department = optionalDepartment.get();
+            department.setEmployees(employeeClient.getEmployeesByDepartmentId(id));
             return mapDepartmentToDto(department);
         } else {
             throw new DepartmentNotFoundException("Department with id " + id + " not found");
@@ -59,13 +69,20 @@ public class DepartmentService implements IDepartmentService {
     @Override
     public List<DepartmentResponse> findDepartmentsByOrganizationId(Long organizationId) {
         List<Department> listOfDepartments = departmentRepository.findByOrganizationId(organizationId);
+        for (Department department : listOfDepartments) {
+            department.setEmployees(employeeClient.getEmployeesByDepartmentId(organizationId));
+        }
         return listOfDepartments.stream().map(this::mapDepartmentToDto).toList();
     }
 
     @Override
     public List<DepartmentResponse> findByOrganizationWithEmployees(Long organizationId) {
         List<Department> listOfDepartments = departmentRepository.findByOrganizationId(organizationId);
-        return listOfDepartments.stream().filter(department -> !department.getEmployees().isEmpty()).map(this::mapDepartmentToDto).toList();
+        List<Department> departments = listOfDepartments.stream().filter(department -> !department.getEmployees().isEmpty()).toList();
+        for (Department department : departments) {
+            department.setEmployees(employeeClient.getEmployeesByDepartmentId(department.getId()));
+        }
+        return listOfDepartments.stream().map(this::mapDepartmentToDto).toList();
     }
 
     @Override

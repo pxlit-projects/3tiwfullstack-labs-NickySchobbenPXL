@@ -19,7 +19,6 @@ import java.util.List;
 public class DepartmentController {
 
     private final IDepartmentService departmentService;
-    private static final Logger LOGGER = LogManager.getLogger(DepartmentController.class);
 
     @GetMapping
     public ResponseEntity<List<DepartmentResponse>> getDepartments() {

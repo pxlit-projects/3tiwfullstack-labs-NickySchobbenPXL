@@ -1,24 +1,25 @@
 package be.pxl.services.controller;
 
 import be.pxl.services.domain.dto.NotificationRequest;
-import be.pxl.services.domain.dto.NotificationResponse;
 import be.pxl.services.services.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/notification")
+@RequestMapping("/notification")
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @GetMapping
+    private static final Logger LOGGER = LogManager.getLogger(NotificationController.class);
+
+    /* @GetMapping
     public ResponseEntity<List<NotificationResponse>> getNotifications() {
         return ResponseEntity.ok(notificationService.getAllNotifications());
     }
@@ -46,5 +47,11 @@ public class NotificationController {
     public ResponseEntity<?> deleteNotificationById(@PathVariable Long id)  {
         notificationService.deleteNotificationById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    } */
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void sendMessage(@RequestBody NotificationRequest notificationRequest) {
+        notificationService.sendMessage(notificationRequest);
     }
 }

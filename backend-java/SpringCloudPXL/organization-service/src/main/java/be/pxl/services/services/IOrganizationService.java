@@ -3,19 +3,23 @@ package be.pxl.services.services;
 import be.pxl.services.domain.dto.OrganizationRequest;
 import be.pxl.services.domain.dto.OrganizationResponse;
 
+import java.util.List;
+
 public interface IOrganizationService {
 
-    public OrganizationResponse findOrganizationById(Long id);
+    OrganizationResponse findOrganizationById(Long id);
 
-    public OrganizationResponse findOrganizationByIdWithDepartments(Long id);
+    OrganizationResponse findOrganizationByIdWithDepartments(Long id);
 
-    public OrganizationResponse findOrganizationByIdWithDepartmentsAndEmployees(Long id);
+    OrganizationResponse findOrganizationByIdWithDepartmentsAndEmployees(Long id);
 
-    public Long addOrganization(OrganizationRequest organizationRequest);
+    Long addOrganization(OrganizationRequest organizationRequest);
 
-    public OrganizationResponse findOrganizationByIdWithEmployees(Long id);
+    OrganizationResponse findOrganizationByIdWithEmployees(Long id);
 
-    public void deleteOrganizationById(Long id);
+    void deleteOrganizationById(Long id);
 
-    public void updateOrganizationById(Long id, OrganizationRequest organizationRequest);
+    void updateOrganizationById(Long id, OrganizationRequest organizationRequest);
+
+    List<OrganizationResponse> findAllOrganizations();
 }

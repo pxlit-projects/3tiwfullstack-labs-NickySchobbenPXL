@@ -1,5 +1,8 @@
 package be.pxl.services.services;
 
+import be.pxl.services.client.NotificationClient;
+import be.pxl.services.domain.NotificationRequest;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,6 +12,7 @@ import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.exceptions.EmployeeNotFoundException;
 import be.pxl.services.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +23,8 @@ import java.util.Optional;
 public class EmployeeService implements IEmployeeService {
 
     private final EmployeeRepository employeeRepository;
+
+    private final NotificationClient notificationClient;
     private static final Logger LOGGER = LogManager.getLogger(EmployeeService.class);
     @Override
     public List<EmployeeResponse> getAllEmployees() {
@@ -35,8 +41,9 @@ public class EmployeeService implements IEmployeeService {
                 .build();
     }
 
-    // TODO: Kleine bug, de ID die teruggestuurd wordt is altijd 1, maar wordt wel altijd goed opgeslagen in de database.
+
     @Override
+    @Transactional
     public Long addEmployee(EmployeeRequest employeeRequest) {
         Employee newEmployee = Employee.builder()
                 .age(employeeRequest.getAge())
@@ -47,6 +54,13 @@ public class EmployeeService implements IEmployeeService {
                 .build();
 
         Employee savedEmployee = employeeRepository.save(newEmployee);
+
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .message("Employee created")
+                .receiver("Nicky")
+                .build();
+
+        notificationClient.sendNotification(notificationRequest);
         return savedEmployee.getId();
     }
 

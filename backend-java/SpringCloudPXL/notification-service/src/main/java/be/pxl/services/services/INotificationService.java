@@ -15,4 +15,6 @@ public interface INotificationService {
     void deleteNotificationById(Long id);
 
     void updateNotificationById(Long id, NotificationRequest notificationRequest);
+
+    void sendMessage(NotificationRequest notificationRequest);
 }

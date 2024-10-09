@@ -35,7 +35,6 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<Long> addEmployee(@RequestBody EmployeeRequest employeeRequest) {
         Long id = employeeService.addEmployee(employeeRequest);
-        LOGGER.info("Employee created with ID: {}", id);
         return ResponseEntity.created(URI.create("/employee/" + id)).build();
     }
 

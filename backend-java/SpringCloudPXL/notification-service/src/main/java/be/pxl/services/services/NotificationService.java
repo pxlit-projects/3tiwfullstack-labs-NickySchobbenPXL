@@ -66,4 +66,11 @@ public class NotificationService implements INotificationService {
                 .subject(notification.getSubject())
                 .build();
     }
+
+    @Override
+    public void sendMessage(NotificationRequest notificationRequest) {
+        LOGGER.info("Receiving notification");
+        LOGGER.info("Sending.... " + notificationRequest.getMessage());
+        LOGGER.info("To " + notificationRequest.getReceiver());
+    }
 }
