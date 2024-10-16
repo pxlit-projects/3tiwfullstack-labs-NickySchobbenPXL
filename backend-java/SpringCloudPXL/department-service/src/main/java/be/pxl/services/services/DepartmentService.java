@@ -49,7 +49,6 @@ public class DepartmentService implements IDepartmentService {
                 .position(departmentRequest.getPosition())
                 .build();
 
-
         return departmentRepository.save(newDepartment).getId();
     }
 
