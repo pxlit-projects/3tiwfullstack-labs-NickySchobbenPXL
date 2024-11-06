@@ -15,6 +15,7 @@ export class CustomerItemComponent {
   getDetails(): void{
     console.log(this.customer);
   }
+
 }
 
 
